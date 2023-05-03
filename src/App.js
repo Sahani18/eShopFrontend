@@ -1,8 +1,14 @@
 import React from "react";
 import "./index.css";
+import Base from "./core/Base";
+import Card from "./core/Card";
 
 const App = () => {
-  return <p className="text-yellow-800 text-3xl">Hello</p>;
+  return (
+    <Base title="Let's do Shopping" description="Welcome to the Store">
+      <Card/>
+    </Base>
+  );
 };
 
 export default App;
