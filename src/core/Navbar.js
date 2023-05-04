@@ -4,11 +4,11 @@ import "../index.css";
 
 export const Navbar = () => {
   return (
-    <div className="bg-gray-900 ">
-      <nav className="relative px-8 py-2 flex justify-between items-center border-y border-gray-400 dark:border-gray-700">
-        <a
+    <div className="bg-gray-900  w-screen ">
+      <nav className=" px-8 py-2 flex justify-between items-center border-y border-gray-400 dark:border-gray-700">
+        <Link to="/"
           className="text-3xl font-bold leading-none flex items-center space-x-4"
-          href="#"
+          
         >
           <span>
             <img
@@ -20,7 +20,7 @@ export const Navbar = () => {
           <span className="text-gray-400 dark:text-gray-300 text-2xl font-normal">
             E kart
           </span>
-        </a>
+        </Link>
         <div className="lg:hidden">
           <button className="navbar-burger flex items-center text-gray-600 dark:text-gray-300 p-3">
             <svg

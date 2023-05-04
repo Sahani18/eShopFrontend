@@ -3,14 +3,14 @@ import "../index.css";
 import Navbar from "./Navbar";
 
 export const Base = ({
-  title = "My title",
-  description = "My description",
-  className="text-gray-500",
+  title,
+  description,
+  className = "text-gray-500",
   children,
 }) => {
   return (
-    <div className="bg-gray-900">
-      <Navbar/>
+    <div className="bg-gray-900 pt-5">
+      
       <div className="text-gray-500 justify-center mx-auto text-center">
         <p className="text-4xl p-1">{title}</p>
         <p className="text-md">{description}</p>
