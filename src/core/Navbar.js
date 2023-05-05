@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../index.css";
+
 
 export const Navbar = () => {
   return (
@@ -37,7 +37,7 @@ export const Navbar = () => {
           <li>
             <Link
               to="/"
-              className="text-sm text-gray-400 hover:text-gray-500 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-400 dark:text-gray-300"
             >
               Home
             </Link>
@@ -82,7 +82,7 @@ export const Navbar = () => {
           <li>
             <Link
               to=""
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Wishlist
             </Link>
@@ -106,7 +106,7 @@ export const Navbar = () => {
           <li>
             <Link
               to=""
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Dashboard
             </Link>
@@ -129,8 +129,8 @@ export const Navbar = () => {
           </li>
           <li>
             <Link
-              to=""
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              to="/adminDashboard"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Admin Dashboard
             </Link>
@@ -154,7 +154,7 @@ export const Navbar = () => {
           <li>
             <Link
               to="/signup"
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Sign Up
             </Link>
@@ -178,7 +178,7 @@ export const Navbar = () => {
           <li>
             <Link
               to="/signin"
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Sign In
             </Link>
@@ -202,7 +202,7 @@ export const Navbar = () => {
           <li>
             <Link
               to="/"
-              className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
+              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
             >
               Sign Out
             </Link>
