@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Base from "../core/Base";
-import "../index.css";
+import Lottie from "lottie-react";
+import AnimationSignup from "../core/animations/signup.json"
+
 import Navbar from "../core/Navbar";
 
 const Signup = () => {
@@ -15,17 +17,22 @@ const Signup = () => {
 
   const { firstname, lastname, email, password, error, success } = value;
 
+  
+
   const handleChange = (firstname) => (event) => {
     setValue({ ...value, error: false, [firstname]: event.target.value });
   };
 
   const signUpForm = () => {
     return (
-      <div className="min-w-[500px] pb-10 min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+      <div className="min-w-[500px] pb-10 min-h-screen bg-gray-900 flex items-center justify-center px-5 py-2">
         <div className="bg-gray-900 text-gray-400 w-max-[1000px] rounded-3xl shadow-xl w-full overflow-hidden">
           <div className="md:flex w-full">
-            <div className="hidden md:block w-1/2 bg-gray-900 py-20 px-10 ">
-              <svg
+            <div className="hidden md:block w-1/2 bg-gray-900 py-5 px-10 ">
+          
+            <Lottie animationData={AnimationSignup} loop={true} className="h-[450px] " />
+           
+             {/*  <svg
                 id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
                 data-name="Layer 1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +234,7 @@ const Signup = () => {
                   transform="translate(-227.576 -76.46149)"
                   fill="#2f2e41"
                 />
-              </svg>
+              </svg> */}
             </div>
             <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
               <div className="text-center mb-10">
@@ -250,7 +257,7 @@ const Signup = () => {
                         type="text"
                         value={firstname}
                         onChange={handleChange("firstname")}
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="firstname"
                       />
                     </div>
@@ -267,7 +274,7 @@ const Signup = () => {
                         type="text"
                         value={lastname}
                         onChange={handleChange("lastname")}
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="lastname"
                       />
                     </div>
@@ -286,7 +293,7 @@ const Signup = () => {
                         type="email"
                         value={email}
                         onChange={handleChange("email")}
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="example@example.com"
                       />
                     </div>
@@ -305,7 +312,7 @@ const Signup = () => {
                         value={password}
                         onChange={handleChange("password")}
                         type="password"
-                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="************"
                       />
                     </div>
