@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Base from "../core/Base";
 import Navbar from "../core/Navbar";
+import { signin, authenticate, isAuthenticated } from "../auth/helper";
+import { Link, redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 /* import Lottie from "lottie-react";
 import AnimationSignup from "../core/animations/signup.json"; */
 
@@ -9,13 +14,48 @@ const Signin = () => {
     email: "",
     password: "",
     error: "",
-    success: false,
+    didRedirect: false,
   });
 
-  const { email, password, error, success } = value;
+  const { email, password, error, didRedirect } = value;
+  const { user } = isAuthenticated();
 
   const handleChange = (email) => (event) => {
     setValue({ ...value, error: false, [email]: event.target.value });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValue({ ...value, error: false});
+    signin({ email, password })
+      .then((data) => {
+        if (data.error) {
+          setValue({ ...value, error: data.error });
+          return toast(data.error, { type: "error", theme: "colored" });
+        }
+        authenticate(data, () => {
+          setValue({
+            ...value,
+            didRedirect: true,
+          });
+        });
+      })
+      .catch(() => toast("Error Occurred"));
+  };
+
+  const performRedirect = () => {
+// TODO: complete this
+
+    if (didRedirect) {
+      if (user && user.role === 1) {
+        return toast("to admin");
+      } else {
+        return toast("to normal dash");
+      }
+    }
+    if (isAuthenticated()) {
+      return toast("to dash");
+    }
   };
 
   const signInForm = () => {
@@ -280,7 +320,10 @@ const Signin = () => {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                    <button
+                      onClick={onSubmit}
+                      className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                    >
                       LOGIN
                     </button>
                   </div>
@@ -295,8 +338,12 @@ const Signin = () => {
   return (
     <>
       <Navbar />
-      {/*  <p>{JSON.stringify(value)}</p> */}
-      <Base>{signInForm()}</Base>
+      <p>{JSON.stringify(value)}</p>
+      <Base>
+        {signInForm()}
+        {performRedirect()}
+      </Base>
+      <ToastContainer />
     </>
   );
 };

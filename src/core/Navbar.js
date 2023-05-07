@@ -1,14 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   return (
     <div className="bg-gray-900  w-screen ">
       <nav className=" px-8 py-2 flex justify-between items-center border-y border-gray-400 dark:border-gray-700">
-        <Link to="/"
-          className="text-3xl font-bold leading-none flex items-center space-x-4"
-          
+        <NavLink
+          to="/"
+          className="text-3xl font-bold leading-none active:text-yellow-500 flex items-center space-x-4"
         >
           <span>
             <img
@@ -20,7 +19,7 @@ export const Navbar = () => {
           <span className="text-gray-400 dark:text-gray-300 text-2xl font-normal">
             E kart
           </span>
-        </Link>
+        </NavLink>
         <div className="lg:hidden">
           <button className="navbar-burger flex items-center text-gray-600 dark:text-gray-300 p-3">
             <svg
@@ -35,12 +34,16 @@ export const Navbar = () => {
         </div>
         <ul className="hidden lg:flex lg:items-center grow mx-10 space-x-4">
           <li>
-            <Link
+            <NavLink
               to="/"
-              className="text-sm text-gray-400 hover:text-gray-400 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -59,33 +62,44 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link to="" className="text-sm text-indigo-600 font-bold">
-              Cart
-            </Link>
-          </li>
-          <li className="text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              className="w-4 h-4 current-fill"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-              />
-            </svg>
-          </li>
-          <li>
-            <Link
+            <NavLink
               to=""
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
+            >
+              Cart
+            </NavLink>
+          </li>
+          <li className="text-gray-300">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              className="w-4 h-4 current-fill"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+              />
+            </svg>
+          </li>
+          <li>
+            <NavLink
+              to=""
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Wishlist
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -104,12 +118,16 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link
+            <NavLink
               to=""
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -128,12 +146,16 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/adminDashboard"
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Admin Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -152,12 +174,16 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/signup"
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Sign Up
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -176,12 +202,16 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/signin"
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Sign In
-            </Link>
+            </NavLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -200,12 +230,16 @@ export const Navbar = () => {
             </svg>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/"
-              className="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-300"
+              className={({ isActive }) => {
+                return isActive
+                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
+                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+              }}
             >
               Sign Out
-            </Link>
+            </NavLink>
           </li>
         </ul>
         <div className="space-x-2 hidden lg:block">

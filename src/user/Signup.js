@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Base from "../core/Base";
 import Lottie from "lottie-react";
-import AnimationSignup from "../core/animations/signup.json"
+import AnimationSignup from "../core/animations/signup.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "../core/Navbar";
+import { signup } from "../auth/helper/index";
 
 const Signup = () => {
   const [value, setValue] = useState({
@@ -17,10 +20,31 @@ const Signup = () => {
 
   const { firstname, lastname, email, password, error, success } = value;
 
-  
-
   const handleChange = (firstname) => (event) => {
     setValue({ ...value, error: false, [firstname]: event.target.value });
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValue({ ...value, error: false });
+    signup({ firstname, lastname, email, password })
+      .then((data) => {
+        if (data.error) {
+          setValue({ ...value, error: data.error, success: false });
+          return toast(data.error, { type: "error" ,theme:"colored"});
+        }
+        setValue({
+          ...value,
+          firstname: "",
+          lastname: "",
+          email: "",
+          password: "",
+          error: false,
+          success: true,
+        });
+        return toast("Registration Successful", { type: "success",theme:"colored" });
+      })
+      .catch(() => toast("Error Occurred",{ type: "warning",theme:"colored" }));
   };
 
   const signUpForm = () => {
@@ -29,10 +53,13 @@ const Signup = () => {
         <div className="bg-gray-900 text-gray-400 w-max-[1000px] rounded-3xl shadow-xl w-full overflow-hidden">
           <div className="md:flex w-full">
             <div className="hidden md:block w-1/2 bg-gray-900 py-5 px-10 ">
-          
-            <Lottie animationData={AnimationSignup} loop={true} className="h-[450px] " />
-           
-             {/*  <svg
+              <Lottie
+                animationData={AnimationSignup}
+                loop={true}
+                className="h-[450px] "
+              />
+
+              {/*  <svg
                 id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
                 data-name="Layer 1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -320,7 +347,10 @@ const Signup = () => {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                    <button
+                      onClick={onSubmit}
+                      className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                    >
                       REGISTER NOW
                     </button>
                   </div>
@@ -336,8 +366,11 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-     {/*  <p>{JSON.stringify(value)}</p> */}
-      <Base>{signUpForm()}</Base>
+    {/*   <p>{JSON.stringify(value)}</p> */}
+      <Base>
+        {signUpForm()}
+        <ToastContainer />
+      </Base>
     </>
   );
 };

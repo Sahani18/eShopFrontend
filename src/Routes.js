@@ -9,12 +9,14 @@ import AdminDashboard from "./user/AdminDashboard";
 const Routing = () => {
   return (
     <BrowserRouter>
+  
       <Routes>
         <Route path="/" exact element={<App />} />
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/signin" exact element={<Signin />} />
         <Route path="/AdminDashboard" exact element={<AdminDashboard />} />
       </Routes>
+    
     </BrowserRouter>
   );
 };
