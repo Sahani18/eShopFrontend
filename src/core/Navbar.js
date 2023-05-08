@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { isAuthenticated} from "../auth/helper";
+import { isAuthenticated } from "../auth/helper";
 
 export const Navbar = () => {
   return (
@@ -148,7 +148,7 @@ export const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to="/adminDashboard"
+              to="/admin/AdminDashboard"
               className={({ isActive }) => {
                 return isActive
                   ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
@@ -238,26 +238,25 @@ export const Navbar = () => {
               </li>
 
               <li>
-                <NavLink
-              
-                  className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300"
-                >
+                <NavLink className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300">
                   Sign Out
                 </NavLink>
               </li>
             </>
           )}
         </ul>
-        <div className="space-x-2 hidden lg:block">
-          <span className="relative inline-block">
-            <img
-              className="h-10 w-10 rounded-full"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-              alt="John Doe"
-            />
-            <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
-          </span>
-        </div>
+        {isAuthenticated() && (
+          <div className="space-x-2 hidden lg:block">
+            <span className="relative inline-block">
+              <img
+                className="h-10 w-10 rounded-full"
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+                alt="John Doe"
+              />
+              <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-600 ring-2 ring-white"></span>
+            </span>
+          </div>
+        )}
       </nav>
     </div>
   );
