@@ -45,7 +45,7 @@ export const authenticate = (data, next) => {
 
 //signout user
 
-export const signout = (next) => {
+export const signout = (data,next) => {
   //clear token from local storage
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt", JSON.stringify(data));

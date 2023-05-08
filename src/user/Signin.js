@@ -338,7 +338,7 @@ const Signin = () => {
   return (
     <>
       <Navbar />
-      <p>{JSON.stringify(value)}</p>
+     {/*  <p>{JSON.stringify(value)}</p> */}
       <Base>
         {signInForm()}
         {performRedirect()}

@@ -4,7 +4,7 @@ import App from "./App";
 import Signup from "./user/Signup";
 import Signin from "./user/Signin";
 import AdminDashboard from "./user/AdminDashboard";
-
+import ProductCart from "./user/Cart";
 
 const Routing = () => {
   return (
@@ -15,6 +15,7 @@ const Routing = () => {
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/signin" exact element={<Signin />} />
         <Route path="/AdminDashboard" exact element={<AdminDashboard />} />
+        <Route path="/Cart" exact element={<ProductCart />} />
       </Routes>
     
     </BrowserRouter>
