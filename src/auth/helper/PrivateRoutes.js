@@ -9,7 +9,7 @@ const PrivateRoute = () => {
     <Navigate
       replace
       to={{
-        pathname: "/",
+        pathname: "/signin",
       }}
     />
   );

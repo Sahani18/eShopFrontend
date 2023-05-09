@@ -1,8 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { isAuthenticated } from "../auth/helper";
+import { NavLink, redirect } from "react-router-dom";
+import { isAuthenticated, signout } from "../auth/helper";
 
 export const Navbar = () => {
+  
+  const highligted =
+    "text-sm text-yellow-500 hover:text-gray-600 dark:text-yellow-500";
+  const notHighlighted =
+    "text-sm text-gray-400 hover:text-yellow-400 dark:text-yellow-500";
+
   return (
     <div className="bg-gray-900  w-screen ">
       <nav className=" px-8 py-2 flex justify-between items-center border-y border-gray-400 dark:border-gray-700">
@@ -38,9 +44,7 @@ export const Navbar = () => {
             <NavLink
               to="/"
               className={({ isActive }) => {
-                return isActive
-                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                return isActive ? highligted : notHighlighted;
               }}
             >
               Home
@@ -66,9 +70,7 @@ export const Navbar = () => {
             <NavLink
               to="/Cart"
               className={({ isActive }) => {
-                return isActive
-                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                return isActive ? highligted : notHighlighted;
               }}
             >
               Cart
@@ -94,9 +96,7 @@ export const Navbar = () => {
             <NavLink
               to=""
               className={({ isActive }) => {
-                return isActive
-                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                return isActive ? highligted : notHighlighted;
               }}
             >
               Wishlist
@@ -122,9 +122,7 @@ export const Navbar = () => {
             <NavLink
               to=""
               className={({ isActive }) => {
-                return isActive
-                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                return isActive ? highligted : notHighlighted;
               }}
             >
               Dashboard
@@ -150,9 +148,7 @@ export const Navbar = () => {
             <NavLink
               to="/admin/AdminDashboard"
               className={({ isActive }) => {
-                return isActive
-                  ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                  : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                return isActive ? highligted : notHighlighted;
               }}
             >
               Admin Dashboard
@@ -180,9 +176,7 @@ export const Navbar = () => {
                 <NavLink
                   to="/signup"
                   className={({ isActive }) => {
-                    return isActive
-                      ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                      : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                    return isActive ? highligted : notHighlighted;
                   }}
                 >
                   Sign Up
@@ -208,9 +202,7 @@ export const Navbar = () => {
                 <NavLink
                   to="/signin"
                   className={({ isActive }) => {
-                    return isActive
-                      ? "text-sm text-yellow-500 hover:text-gray-600 dark:text-gray-300"
-                      : "text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300";
+                    return isActive ? highligted : notHighlighted;
                   }}
                 >
                   Sign In
@@ -238,7 +230,14 @@ export const Navbar = () => {
               </li>
 
               <li>
-                <NavLink className="text-sm text-gray-500 hover:text-gray-600 dark:text-gray-300">
+                <NavLink
+                  onClick={() => {
+                    signout();
+                      redirect("/");
+
+                  }}
+                  className={notHighlighted}
+                >
                   Sign Out
                 </NavLink>
               </li>

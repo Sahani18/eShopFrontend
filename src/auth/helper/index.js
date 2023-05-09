@@ -45,10 +45,10 @@ export const authenticate = (data, next) => {
 
 //signout user
 
-export const signout = (data,next) => {
+export const signout = (next) => {
   //clear token from local storage
   if (typeof window !== "undefined") {
-    localStorage.removeItem("jwt", JSON.stringify(data));
+    localStorage.removeItem("jwt");
     next();
     // signout from backend
     return fetch(`${API}\signout`, {

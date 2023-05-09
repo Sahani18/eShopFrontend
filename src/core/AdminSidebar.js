@@ -2,10 +2,7 @@ import React from "react";
 import {
   BriefcaseIcon,
   ChartBarIcon,
-  CommandLineIcon,
-  UserGroupIcon,
-  PlusCircleIcon
- 
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar = () => {
