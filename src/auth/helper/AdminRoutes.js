@@ -9,7 +9,7 @@ const AdminRoute = () => {
     <Navigate
       replace
       to={{
-        pathname: "/",
+        pathname: "/signin",
       }}
     />
   );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Base from "../core/Base";
 import Navbar from "../core/Navbar";
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
-import { Link, redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,8 +11,8 @@ import AnimationSignup from "../core/animations/signup.json"; */
 
 const Signin = () => {
   const [value, setValue] = useState({
-    email: "",
-    password: "",
+    email: "sahani@sahani.com",
+    password: "12345678",
     error: "",
     didRedirect: false,
   });
@@ -26,7 +26,7 @@ const Signin = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValue({ ...value, error: false});
+    setValue({ ...value, error: false });
     signin({ email, password })
       .then((data) => {
         if (data.error) {
@@ -44,17 +44,38 @@ const Signin = () => {
   };
 
   const performRedirect = () => {
-// TODO: complete this
+    // TODO: complete this
 
     if (didRedirect) {
       if (user && user.role === 1) {
-        return toast("to admin");
+        return (
+          <Navigate
+            replace
+            to={{
+              pathname: "/admin/AdminDashboard",
+            }}
+          />
+        );
       } else {
-        return toast("to normal dash");
+        return (
+          <Navigate
+            replace
+            to={{
+              pathname: "/",
+            }}
+          />
+        );
       }
     }
     if (isAuthenticated()) {
-      return toast("to dash");
+      return (
+        <Navigate
+          replace
+          to={{
+            pathname: "/",
+          }}
+        />
+      );
     }
   };
 
@@ -338,7 +359,7 @@ const Signin = () => {
   return (
     <>
       <Navbar />
-     {/*  <p>{JSON.stringify(value)}</p> */}
+      {/*  <p>{JSON.stringify(value)}</p> */}
       <Base>
         {signInForm()}
         {performRedirect()}
