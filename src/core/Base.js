@@ -4,14 +4,14 @@ import "../index.css";
 export const Base = ({
   title,
   description,
-  className = "text-gray-400",
+  className = "text-gray-400 bg-gray-900",
   children,
 }) => {
   return (
     <div className="bg-gray-900 ">
       <div className="text-gray-400 justify-center mx-auto text-center">
-        <p className="text-4xl">{title}</p>
-        <p className="text-md">{description}</p>
+        <p className="text-4xl ">{title}</p>
+        <p className="text-md ">{description}</p>
       </div>
       <div className={className}>{children}</div>
 

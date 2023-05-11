@@ -10,7 +10,7 @@ import { signup } from "../auth/helper/index";
 
 const Signup = () => {
   const [value, setValue] = useState({
-    firstname: "",
+    name: "",
     lastname: "",
     email: "",
     password: "",
@@ -18,16 +18,16 @@ const Signup = () => {
     success: false,
   });
 
-  const { firstname, lastname, email, password, error, success } = value;
+  const { name, lastname, email, password, error, success } = value;
 
-  const handleChange = (firstname) => (event) => {
-    setValue({ ...value, error: false, [firstname]: event.target.value });
+  const handleChange = (name) => (event) => {
+    setValue({ ...value, error: false, [name]: event.target.value });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
     setValue({ ...value, error: false });
-    signup({ firstname, lastname, email, password })
+    signup({ name, lastname, email, password })
       .then((data) => {
         if (data.error) {
           setValue({ ...value, error: data.error, success: false });
@@ -35,7 +35,7 @@ const Signup = () => {
         }
         setValue({
           ...value,
-          firstname: "",
+          name: "",
           lastname: "",
           email: "",
           password: "",
@@ -282,8 +282,8 @@ const Signup = () => {
                       </div>
                       <input
                         type="text"
-                        value={firstname}
-                        onChange={handleChange("firstname")}
+                        value={name}
+                        onChange={handleChange("name")}
                         className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="firstname"
                       />

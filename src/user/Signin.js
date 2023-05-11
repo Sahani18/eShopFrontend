@@ -11,8 +11,8 @@ import AnimationSignup from "../core/animations/signup.json"; */
 
 const Signin = () => {
   const [value, setValue] = useState({
-    email: "sahani@sahani.com",
-    password: "12345678",
+    email: "hello@hello.com",
+    password: "123456",
     error: "",
     didRedirect: false,
   });
@@ -61,7 +61,7 @@ const Signin = () => {
           <Navigate
             replace
             to={{
-              pathname: "/",
+              pathname: "/Dashboard",
             }}
           />
         );
