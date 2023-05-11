@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Signup from "./user/Signup";
 import Signin from "./user/Signin";
@@ -7,6 +7,11 @@ import AdminDashboard from "./user/AdminDashboard";
 import ProductCart from "./user/Cart";
 import AdminRoute from "./auth/helper/AdminRoutes";
 import PrivateRoute from "./auth/helper/PrivateRoutes";
+import AddCategory from "./admin/AddCategory";
+import UserDashBoard from "./user/UserDashBoard";
+import ManageCatagory from "./admin/ManageCatagory";
+import AddProduct from "./admin/AddProduct";
+
 
 const Routing = () => {
   return (
@@ -20,14 +25,18 @@ const Routing = () => {
 
         <Route exact element={<AdminRoute />}>
           <Route
-            path="/admin/AdminDashboard"
+            path="/admin/adminDashboard"
             exact
             element={<AdminDashboard />}
           />
+          <Route path="/admin/create/catagory" exact element={<AddCategory />} />
+          <Route path="/admin/manage/catagory" exact element={<ManageCatagory />} />
+          <Route path="/admin/create/product" exact element={<AddProduct />} />
         </Route>
         {/*      private route */}
         <Route exact element={<PrivateRoute />}>
-          <Route path="/Cart" exact element={<ProductCart />} />
+          <Route path="/cart" exact element={<ProductCart />} />
+          <Route path="/dashboard" exact element={<UserDashBoard />} />
         </Route>
       </Routes>
     </BrowserRouter>
