@@ -11,6 +11,7 @@ import AddCategory from "./admin/AddCategory";
 import UserDashBoard from "./user/UserDashBoard";
 import ManageCatagory from "./admin/ManageCatagory";
 import AddProduct from "./admin/AddProduct";
+import ManageProducts from "./admin/ManageProducts";
 
 
 const Routing = () => {
@@ -32,6 +33,7 @@ const Routing = () => {
           <Route path="/admin/create/catagory" exact element={<AddCategory />} />
           <Route path="/admin/manage/catagory" exact element={<ManageCatagory />} />
           <Route path="/admin/create/product" exact element={<AddProduct />} />
+          <Route path="/admin/manage/products" exact element={<ManageProducts />} />
         </Route>
         {/*      private route */}
         <Route exact element={<PrivateRoute />}>

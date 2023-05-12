@@ -3,7 +3,7 @@ const API = process.env.REACT_APP_BACKEND;
 //sign up user
 
 export const signup = (user) => {
-  return fetch(`${API}\signup`, {
+  return fetch(`${API}/signup`, {
     method: "POST",
     headers: {
       ACCEPT: "application/json",
@@ -20,7 +20,7 @@ export const signup = (user) => {
 // sign in user
 
 export const signin = (user) => {
-  return fetch(`${API}\signin`, {
+  return fetch(`${API}/signin`, {
     method: "POST",
     headers: {
       ACCEPT: "application/json",
