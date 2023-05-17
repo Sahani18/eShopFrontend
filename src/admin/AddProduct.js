@@ -13,10 +13,11 @@ const CreateProduct = () => {
     name: "",
     description: "",
     price: "",
+    catagory: "",
     stock: "",
     photo: "",
     catagories: [],
-    catagory: "",
+
     loading: false,
     error: "",
     createdProduct: "",
@@ -28,11 +29,11 @@ const CreateProduct = () => {
     name,
     description,
     price,
-
+    catagory,
     stock,
     photo,
     catagories,
-    catagory,
+
     loading,
     error,
     createdProduct,
@@ -64,30 +65,30 @@ const CreateProduct = () => {
   const handleChange = (name) => (event) => {
     const values =
       name === "photo" ? event.target.files[0] : event.target.value;
-    formData.set(name, value);
+    formData.set(name, values);
     setValue({ ...value, [name]: values });
   };
 
   const onSubmit = (event) => {
-    console.log(photo);
     event.preventDefault();
     setValue({ ...value, error: "", loading: true });
+    console.log(value);
     createProduct(user._id, token, formData)
       .then((data) => {
         if (data.error) {
           setValue({ ...value, error: data.error });
           return toast(data.error, { type: "error", theme: "colored" });
         } else {
-          setValue({
+          console.log("CREATED PRODUCT", data);
+            setValue({
             ...value,
             name: "",
             description: "",
             price: "",
-
+            catagory: "",
             stock: "",
             photo: "",
             catagories: [],
-            catagory: "",
             loading: false,
             error: "",
             createdProduct: data.name,
@@ -98,7 +99,7 @@ const CreateProduct = () => {
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast(err, { type: "error", theme: "colored" }));
   };
   return (
     <>
@@ -213,9 +214,9 @@ const CreateProduct = () => {
                     </div>
 
                     <select
-                      onChange={handleChange("category")}
+                      onChange={handleChange("catagory")}
                       className="w-full -ml-10 pl-2 pr-3 py-2 rounded-lg border-2 border-gray-700 outline-none focus:border-indigo-500"
-                      placeholder="Category"
+                      placeholder="Catagory"
                     >
                       <option>Select</option>
                       {catagories &&

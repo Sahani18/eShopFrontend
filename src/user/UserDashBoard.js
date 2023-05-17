@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../core/Navbar";
+import Base from "../core/Base";
 
 function UserDashBoard() {
   return (
-    <div>UserDashBoard</div>
-  )
+    <>
+      <Navbar />
+      <Base>
+        <div className="h-screen w-screen"> UserDashBoard</div>
+      </Base>
+    </>
+  );
 }
 
-export default UserDashBoard
+export default UserDashBoard;
