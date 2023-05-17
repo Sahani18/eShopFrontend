@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../core/Navbar";
 import Base from "../core/Base";
 import { isAuthenticated } from "../auth/helper";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { getAllProducts, deleteProduct } from "./helper/adminapicall";
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 function ManageProducts() {
   const [products, setProducts] = useState([]);
@@ -32,8 +34,10 @@ function ManageProducts() {
     deleteProduct(user._id, token, productId).then((data) => {
       if (data.error) {
         return toast(data.error, { type: "error", theme: "colored" });
+      } else {
+        toast("Deleted sucessfully", { type: "success", theme: "colored" });
+        preloadData();
       }
-      preloadData();
     });
   };
   return (
@@ -42,6 +46,9 @@ function ManageProducts() {
       <Base>
         <p className="text-3xl text-center">Manage Products</p>
         <p className="text-md pt-1 text-center">Manage your products here</p>
+        <Link to="/admin/AdminDashboard">
+          <ArrowLeftCircleIcon className="w-10 h-10 ml-5 hover:cursor-pointer" />
+        </Link>
         <div className="h-screen w-screen bg-gray-900 justify-center p-20">
           {products.map((prod, index) => {
             console.log(prod);
@@ -55,12 +62,11 @@ function ManageProducts() {
                   <p className="text-md text-white">{prod.description}</p>
                 </div>
                 <div className="h-[80px] w-[340px] flex">
-                  <button
-                    onClick={updateProduct}
-                    className="block text-center h-10 w-32 max-w-xs mx-auto mt-8 bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3  font-semibold"
-                  >
-                    Update
-                  </button>
+                  <Link to={`/admin/product/update/${prod._id}`}>
+                    <div className="block h-10 w-32 max-w-xs mx-auto mt-8 bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg   font-semibold text-center">
+                      <p className="text-center pt-2">Update</p>
+                    </div>
+                  </Link>
                   <button
                     onClick={() => {
                       deleteThisProduct(prod._id);
@@ -74,6 +80,7 @@ function ManageProducts() {
             );
           })}
         </div>
+        <ToastContainer />
       </Base>
     </>
   );
