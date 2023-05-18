@@ -1,8 +1,9 @@
 import React from "react";
-import { NavLink, redirect } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { isAuthenticated, signout } from "../auth/helper";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   const highligted =
     "text-sm text-yellow-500 hover:text-gray-600 dark:text-yellow-500";
   const notHighlighted =
@@ -93,7 +94,7 @@ export const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to=""
+              to="/wishlist"
               className={({ isActive }) => {
                 return isActive ? highligted : notHighlighted;
               }}
@@ -239,8 +240,7 @@ export const Navbar = () => {
               <li>
                 <NavLink
                   onClick={() => {
-                    signout();
-                    redirect("/");
+                    signout().then(() => navigate("/"));
                   }}
                   className={notHighlighted}
                 >

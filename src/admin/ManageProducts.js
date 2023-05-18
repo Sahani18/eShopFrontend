@@ -26,9 +26,7 @@ function ManageProducts() {
     preloadData();
   }, []);
 
-  const updateProduct = () => {
-    //
-  };
+
 
   const deleteThisProduct = (productId) => {
     deleteProduct(user._id, token, productId).then((data) => {

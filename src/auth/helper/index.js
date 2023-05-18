@@ -46,17 +46,16 @@ export const authenticate = (data, next) => {
 //signout user
 
 export const signout = (next) => {
-  //clear token from local storage
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
-    next();
-    // signout from backend
-    return fetch(`${API}\signout`, {
+
+    return fetch(`${API}/signout`, {
       method: "GET",
     })
-      .then((response) => console.log("Signout Success"))
+      .then((response) => console.log("signout success"))
       .catch((err) => console.log(err));
   }
+  next();
 };
 
 // check authentication
