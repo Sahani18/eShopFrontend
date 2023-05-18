@@ -19,6 +19,56 @@ export const createCatagory = (userId, token, catagory) => {
       console.log(err);
     });
 };
+// update catagory
+
+
+export const updateCatagory = (userId, token,catagory, catagoryId) => {
+  return fetch(`${API}/catagory/update/${catagoryId}/${userId}`, {
+    method: "PUT",
+    headers: {
+      ACCEPT: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(catagory),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+//get a catagory
+export const getaCatagory = (catagoryId) => {
+  return fetch(`${API}/catagory/${catagoryId}`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+//delete catagory
+
+export const deleteCatagory=(userID,token,catagoryID)=>{
+  return fetch(`${API}/catagory/remove/${catagoryID}/${userID}`, {
+    method: "DELETE",
+    headers: {
+      ACCEPT: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+
+}
 
 // get all catagories
 

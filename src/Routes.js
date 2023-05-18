@@ -13,6 +13,8 @@ import ManageCatagory from "./admin/ManageCatagory";
 import AddProduct from "./admin/AddProduct";
 import ManageProducts from "./admin/ManageProducts";
 import UpdateProduct from "./admin/UpdateProduct";
+import UpdateCatagory from "./admin/UpdateCatagory";
+import Wishlist from "./user/Wishlist";
 
 
 const Routing = () => {
@@ -31,16 +33,38 @@ const Routing = () => {
             exact
             element={<AdminDashboard />}
           />
-          <Route path="/admin/create/catagory" exact element={<AddCategory />} />
-          <Route path="/admin/manage/catagory" exact element={<ManageCatagory />} />
+          <Route
+            path="/admin/create/catagory"
+            exact
+            element={<AddCategory />}
+          />
+          <Route
+            path="/admin/manage/catagory"
+            exact
+            element={<ManageCatagory />}
+          />
           <Route path="/admin/create/product" exact element={<AddProduct />} />
-          <Route path="/admin/manage/products" exact element={<ManageProducts />} />
-          <Route path="/admin/product/update/:productID" exact element={<UpdateProduct />} />
+          <Route
+            path="/admin/manage/products"
+            exact
+            element={<ManageProducts />}
+          />
+          <Route
+            path="/admin/product/update/:productID"
+            exact
+            element={<UpdateProduct />}
+          />
+          <Route
+            path="/admin/catagory/update/:catagoryID"
+            exact
+            element={<UpdateCatagory />}
+          />
         </Route>
         {/*      private route */}
         <Route exact element={<PrivateRoute />}>
           <Route path="/cart" exact element={<ProductCart />} />
           <Route path="/dashboard" exact element={<UserDashBoard />} />
+          <Route path="/wishlist" exact element={<Wishlist />} />
         </Route>
       </Routes>
     </BrowserRouter>

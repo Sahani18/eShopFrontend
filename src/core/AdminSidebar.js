@@ -61,10 +61,7 @@ const Sidebar = () => {
             <TruckIcon className="w-5 h-5" />
             <span className="mx-2 text-sm font-medium">Manage Order</span>
           </Link>
-          <Link className="flex items-center px-3 py-2 text-gray-400 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700">
-            <UsersIcon className="w-5 h-5" />
-            <span className="mx-2 text-sm font-medium">Registered Users</span>
-          </Link>
+         
         </nav>
       </div>
     </aside>
