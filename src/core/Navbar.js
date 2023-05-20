@@ -7,7 +7,7 @@ export const Navbar = () => {
   const highligted =
     "text-sm text-yellow-500 hover:text-gray-600 dark:text-yellow-500";
   const notHighlighted =
-    "text-sm text-gray-400 hover:text-yellow-400 dark:text-yellow-500";
+    "text-sm text-gray-400 hover:text-yellow-400 dark:text-gray-400";
 
   return (
     <div className="bg-gray-900  w-screen ">

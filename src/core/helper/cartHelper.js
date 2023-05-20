@@ -4,8 +4,19 @@ export const addItemToCart = (item) => {
     if (localStorage.getItem("cart")) {
       cart = JSON.parse(localStorage.getItem("cart"));
     }
-    cart.push({ ...item});
+    cart.push({ ...item });
     localStorage.setItem("cart", JSON.stringify(cart));
   }
-  
 };
+
+export const loadCart = () => {
+  if (typeof window !== undefined) {
+    if (localStorage.getItem("cart")) {
+      return JSON.parse(localStorage.getItem("cart"));
+    }
+  }
+};
+
+export const removeCartItem=(id)=>{
+  
+}
