@@ -16,7 +16,6 @@ import UpdateProduct from "./admin/UpdateProduct";
 import UpdateCatagory from "./admin/UpdateCatagory";
 import Wishlist from "./user/Wishlist";
 
-
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -24,6 +23,8 @@ const Routing = () => {
         <Route path="/" exact element={<App />} />
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/signin" exact element={<Signin />} />
+        <Route path="/cart" exact element={<ProductCart />} />
+
 
         {/* admin route */}
 
@@ -62,7 +63,6 @@ const Routing = () => {
         </Route>
         {/*      private route */}
         <Route exact element={<PrivateRoute />}>
-          <Route path="/cart" exact element={<ProductCart />} />
           <Route path="/dashboard" exact element={<UserDashBoard />} />
           <Route path="/wishlist" exact element={<Wishlist />} />
         </Route>

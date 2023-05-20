@@ -47,7 +47,7 @@ function ManageProducts() {
         <Link to="/admin/AdminDashboard">
           <ArrowLeftCircleIcon className="w-10 h-10 ml-5 hover:cursor-pointer" />
         </Link>
-        <div className="h-screen w-screen bg-gray-900 justify-center p-20">
+        <div className=" w-screen bg-gray-900 justify-center p-20">
           {products.map((prod, index) => {
             console.log(prod);
             return (
