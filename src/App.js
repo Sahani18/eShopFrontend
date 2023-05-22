@@ -27,9 +27,9 @@ const App = () => {
     <>
       <Navbar />
       <Base title="Let's do Shopping" description="Welcome to the Store">
-        <div className=" p-10  grid grid-cols-4   gap-10">
+        <div className=" p-10 grid grid-cols-4 gap-10 ">
           {product.map((data, index) => {
-            return <Card key={index} products={data}/>;
+            return <Card key={index} products={data} />;
           })}
         </div>
         <ToastContainer />
