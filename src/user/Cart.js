@@ -4,12 +4,14 @@ import Navbar from "../core/Navbar";
 import Base from "../core/Base";
 import { loadCart, removeCartItem } from "../core/helper/cartHelper";
 import { ToastContainer, toast } from "react-toastify";
+import { isAuthenticated } from "../auth/helper";
 
 const API = process.env.REACT_APP_BACKEND;
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
   const [count, setCount] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState(0);
   const [discount, setDiscount] = useState("");
 
   const increaseCount = () => {
@@ -32,9 +34,32 @@ const Cart = () => {
     return amount;
   };
   const checkCoupon = () => {
-    if (discount == "SAHANI") {
-      toast("sucess");
-    }
+    if (discount === "SAHANI" || discount === "SUBHANSHU") {
+      setDiscountPrice(100);
+      toast("Coupon Applied", { theme: "colored", type: "success" });
+    } else toast("Invalid Coupon", { theme: "colored", type: "error" });
+  };
+
+  const onCouponChange = (e) => {
+    setDiscount(e.target.value.toUpperCase());
+  };
+
+  const showPaymentButton = () => {
+    return isAuthenticated() ? (
+      <button
+        /*  onClick={onSubmit} */
+        className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+      >
+        Pay with Stripe
+      </button>
+    ) : (
+      <button
+        /*  onClick={onSubmit} */
+        className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+      >
+        SignIn to Proceed
+      </button>
+    );
   };
 
   return (
@@ -131,7 +156,9 @@ const Cart = () => {
                   <dt className="flex items-center text-sm text-gray-300">
                     <span>Discount</span>
                   </dt>
-                  <dd className="text-sm font-medium text-green-400">- ₹ 0</dd>
+                  <dd className="text-sm font-medium text-green-400">
+                    - ₹ {discountPrice}
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between pt-4">
                   <dt className="flex items-center text-sm text-green-400">
@@ -140,10 +167,7 @@ const Cart = () => {
                   <dd className="text-sm font-medium text-green-400 flex">
                     <input
                       type="text"
-                      
-                      onChange={(e) => {
-                        setDiscount(e.target.value);
-                      }}
+                      onChange={onCouponChange}
                       className="uppercase p-1 rounded-sm text-start w-28 mr-4 text-green-600"
                     />
                     <div
@@ -168,20 +192,15 @@ const Cart = () => {
                     Total Amount
                   </dt>
                   <dd className="text-base font-medium text-gray-100">
-                    {getCartAmount()}
+                    {getCartAmount() - discountPrice}
                   </dd>
                 </div>
               </dl>
               <div className="px-2 pb-4 font-medium text-green-400">
-                You will save ₹ 0 on this order
+                {`You will save ₹ ${discountPrice} on this order`}
               </div>
             </div>
-            <button
-              /*  onClick={onSubmit} */
-              className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
-            >
-              Checkout
-            </button>
+            {showPaymentButton()}
           </section>
         </div>
       ) : null}
@@ -196,6 +215,9 @@ const ProductCart = () => {
       <Base title={"Shopping Cart"} description={"Manage your cart here"}>
         <Cart />
         <ToastContainer />
+        <br/>
+        <br/>
+        
       </Base>
     </>
   );
