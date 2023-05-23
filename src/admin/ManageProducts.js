@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { getAllProducts, deleteProduct } from "./helper/adminapicall";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+const API = process.env.REACT_APP_BACKEND;
 
 function ManageProducts() {
   const [products, setProducts] = useState([]);
@@ -25,8 +26,6 @@ function ManageProducts() {
   useEffect(() => {
     preloadData();
   }, []);
-
-
 
   const deleteThisProduct = (productId) => {
     deleteProduct(user._id, token, productId).then((data) => {
@@ -49,15 +48,21 @@ function ManageProducts() {
         </Link>
         <div className=" w-screen bg-gray-900 justify-center p-20">
           {products.map((prod, index) => {
-            console.log(prod);
             return (
               <div
                 key={index}
-                className="h-[100px] content-center mt-4  w-[600px] rounded-lg bg-gray-600 justify-between flex mx-auto "
+                className="h-[130px] content-center mt-4 w-2/3 rounded-lg bg-gray-600 justify-between flex mx-auto "
               >
+                <div className="h-full w-24">
+                  <img
+                    src={`${API}/product/photo/${prod._id}`}
+                    className="h-full rounded-l-lg"
+                    alt={prod.name}
+                  />
+                </div>
                 <div className="h-[80px] w-[240px] text-start pl-3 pt-3">
-                  <p className="text-xl text-white">{prod.name}</p>
-                  <p className="text-md text-white">{prod.description}</p>
+                  <p className="text-2xl text-gray-300">{prod.name}</p>
+                  <p className="text-md text-gray-400">{prod.description}</p>
                 </div>
                 <div className="h-[80px] w-[340px] flex">
                   <Link to={`/admin/product/update/${prod._id}`}>

@@ -200,7 +200,9 @@ const Cart = () => {
                 {`You will save ₹ ${discountPrice} on this order`}
               </div>
             </div>
+            <br />
             {showPaymentButton()}
+            <br />
           </section>
         </div>
       ) : null}
@@ -215,9 +217,8 @@ const ProductCart = () => {
       <Base title={"Shopping Cart"} description={"Manage your cart here"}>
         <Cart />
         <ToastContainer />
-        <br/>
-        <br/>
-        
+        <br />
+        <br />
       </Base>
     </>
   );
