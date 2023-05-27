@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addItemToCart } from "./helper/cartHelper";
+import { addItemToCart, removeCartItem } from "./helper/cartHelper";
 const API = process.env.REACT_APP_BACKEND;
 
 const Card = ({ products }) => {
@@ -11,6 +11,10 @@ const Card = ({ products }) => {
 
   const addCart = () => {
     addItemToCart(products);
+  };
+
+  const removeCart = (id) => {
+    removeCartItem(id);
   };
 
   return (
@@ -44,7 +48,10 @@ const Card = ({ products }) => {
           </button>
         ) : (
           <button
-            onClick={() => setAddToCart(true)}
+            onClick={() => {
+              removeCart(products._id);
+              return setAddToCart(true);
+            }}
             type="button"
             className="mt-6 w-full rounded-sm bg-red-800 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
           >

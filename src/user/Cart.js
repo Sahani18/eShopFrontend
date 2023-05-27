@@ -63,7 +63,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <div className="w-2/3  p-10 ">
         {/*  cart item layout */}
         {products ? (
