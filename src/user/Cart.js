@@ -5,6 +5,8 @@ import Base from "../core/Base";
 import { loadCart, removeCartItem } from "../core/helper/cartHelper";
 import { ToastContainer, toast } from "react-toastify";
 import { isAuthenticated } from "../auth/helper";
+import StripeCheckout from "react-stripe-checkout";
+import { NavLink } from "react-router-dom";
 
 const API = process.env.REACT_APP_BACKEND;
 
@@ -13,8 +15,12 @@ const Cart = () => {
   const [count, setCount] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
   const [discount, setDiscount] = useState("");
+  const [total, setTotal] = useState(0);
+  const userId = isAuthenticated() && isAuthenticated().user._id;
+  const token = isAuthenticated() && isAuthenticated().token;
+  const Currencyconversion = 100;
 
-  const increaseCount = () => {
+   const increaseCount = () => {
     return setCount(count + 1);
   };
 
@@ -33,32 +39,72 @@ const Cart = () => {
     });
     return amount;
   };
+
   const checkCoupon = () => {
-    if (discount === "SAHANI" || discount === "SUBHANSHU") {
-      setDiscountPrice(100);
-      toast("Coupon Applied", { theme: "colored", type: "success" });
-    } else toast("Invalid Coupon", { theme: "colored", type: "error" });
+    if (discount !== "") {
+      if (products.length > 0) {
+        if (discount === "SAHANI" || discount === "SUBHANSHU") {
+          setDiscountPrice(100);
+          toast("Coupon Applied", { theme: "colored", type: "success" });
+        } else toast("Invalid Coupon", { theme: "colored", type: "error" });
+      } else toast("Add products First", { theme: "colored", type: "info" });
+    } else toast("Enter Coupon Code", { theme: "colored", type: "warning" });
   };
 
   const onCouponChange = (e) => {
     setDiscount(e.target.value.toUpperCase());
   };
 
+  const stripeAmount = () => {
+    let amount = getCartAmount() - discountPrice;
+    // setTotal(getCartAmount() * Currencyconversion - discountPrice * Currencyconversion);
+    return amount;
+  };
+
+  const makePayment = (token) => {
+    const body = {
+      token:token,
+      amount:stripeAmount()*Currencyconversion,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    return fetch(`${API}/payment`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    })
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
+  };
+
   const showPaymentButton = () => {
     return isAuthenticated() ? (
-      <button
-        /*  onClick={onSubmit} */
-        className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+      <StripeCheckout
+        stripeKey="pk_test_51NCgUpSA4QKHgmwbV2pqsKXP7oI8hhuDKzPjCAwAGscHabXNrqvbCexbeUUuautHuSvztzUwJxriT1H1oBYeqNji00L3v9gT9i"
+        token={makePayment}
+        amount={stripeAmount()*Currencyconversion}
+        key={token}
+        shippingAddress=""
+        billingAddress=""
+        email=""
+        name="E Kart"
+        allowRememberMe
+        currency="INR"
       >
-        Pay with Stripe
-      </button>
+        {" "}
+        <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+          Pay with Stripe
+        </button>{" "}
+      </StripeCheckout>
     ) : (
-      <button
-        /*  onClick={onSubmit} */
-        className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
-      >
-        SignIn to Proceed
-      </button>
+      <>
+        <NavLink to="/signin">
+          <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+            SignIn to Proceed
+          </button>
+        </NavLink>
+      </>
     );
   };
 
@@ -192,7 +238,8 @@ const Cart = () => {
                     Total Amount
                   </dt>
                   <dd className="text-base font-medium text-gray-100">
-                    {getCartAmount() - discountPrice}
+                    {stripeAmount()}
+                    {/*    {getCartAmount() - discountPrice} */}
                   </dd>
                 </div>
               </dl>
