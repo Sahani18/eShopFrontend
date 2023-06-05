@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { isAuthenticated } from "../auth/helper";
 import StripeCheckout from "react-stripe-checkout";
 import { NavLink } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
+import { getToken } from "../core/helper/paypalHelper";
 
 const API = process.env.REACT_APP_BACKEND;
 
@@ -16,11 +18,29 @@ const Cart = () => {
   const [discountPrice, setDiscountPrice] = useState(0);
   const [discount, setDiscount] = useState("");
   const [total, setTotal] = useState(0);
-  const userId = isAuthenticated() && isAuthenticated().user._id;
+  const userID = isAuthenticated() && isAuthenticated().user._id;
   const token = isAuthenticated() && isAuthenticated().token;
   const Currencyconversion = 100;
+  const [info, setInfo] = useState({
+    loading: true,
+    error: false,
+    clientToken: null,
+    error: "",
+  });
 
-   const increaseCount = () => {
+  const getMeToken = (userID, token) => {
+    console.log(userID);
+    return getToken(userID, token).then((info) => {
+      console.log(info);
+      if (info.error) {
+        setInfo({ ...info, error: info.error });
+      } else {
+        let clientToken = info.clientToken;
+        setInfo({clientToken});
+      }
+    });
+  };
+  const increaseCount = () => {
     return setCount(count + 1);
   };
 
@@ -30,7 +50,10 @@ const Cart = () => {
 
   useEffect(() => {
     setProducts(loadCart());
+    getMeToken(userID, token)
   }, []);
+
+  const payPal = () => {};
 
   const getCartAmount = () => {
     let amount = 0;
@@ -63,13 +86,13 @@ const Cart = () => {
 
   const makePayment = (token) => {
     const body = {
-      token:token,
-      amount:stripeAmount()*Currencyconversion,
+      token: token,
+      amount: stripeAmount() * Currencyconversion,
     };
     const headers = {
       "Content-Type": "application/json",
     };
-    return fetch(`${API}/payment`, {
+    return fetch(`${API}/payment/stripe`, {
       method: "POST",
       headers,
       body: JSON.stringify(body),
@@ -80,23 +103,31 @@ const Cart = () => {
 
   const showPaymentButton = () => {
     return isAuthenticated() ? (
-      <StripeCheckout
-        stripeKey="pk_test_51NCgUpSA4QKHgmwbV2pqsKXP7oI8hhuDKzPjCAwAGscHabXNrqvbCexbeUUuautHuSvztzUwJxriT1H1oBYeqNji00L3v9gT9i"
-        token={makePayment}
-        amount={stripeAmount()*Currencyconversion}
-        key={token}
-        shippingAddress=""
-        billingAddress=""
-        email=""
-        name="E Kart"
-        allowRememberMe
-        currency="INR"
-      >
-        {" "}
-        <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-          Pay with Stripe
-        </button>{" "}
-      </StripeCheckout>
+      <>
+        <StripeCheckout
+          stripeKey="pk_test_51NCgUpSA4QKHgmwbz1AKTyPuTcmASpXLDMfxrpeDODjVQBWxMZ41t3cnkPM7nOzqDQlwxp6x4ST2NhvKAq08ZD3u003Lrb0i9Q"
+          token={makePayment}
+          amount={stripeAmount() * Currencyconversion}
+          key={token}
+          shippingAddress=""
+          billingAddress=""
+          email=""
+          name="E Kart"
+          allowRememberMe
+          currency="INR"
+        >
+          {" "}
+          <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+            Pay with Stripe
+          </button>{" "}
+        </StripeCheckout>
+        <br />
+        <button
+       
+        className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+          Pay with Paypal
+        </button>
+      </>
     ) : (
       <>
         <NavLink to="/signin">

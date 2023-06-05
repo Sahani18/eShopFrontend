@@ -61,7 +61,7 @@ const Signin = () => {
           <Navigate
             replace
             to={{
-              pathname: "/Dashboard",
+              pathname: "/",
             }}
           />
         );
