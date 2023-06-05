@@ -8,7 +8,7 @@ import ProductCart from "./user/Cart";
 import AdminRoute from "./auth/helper/AdminRoutes";
 import PrivateRoute from "./auth/helper/PrivateRoutes";
 import AddCategory from "./admin/AddCategory";
-import UserDashBoard from "./user/UserDashBoard";
+
 import ManageCatagory from "./admin/ManageCatagory";
 import AddProduct from "./admin/AddProduct";
 import ManageProducts from "./admin/ManageProducts";
@@ -63,7 +63,7 @@ const Routing = () => {
         </Route>
         {/*      private route */}
         <Route exact element={<PrivateRoute />}>
-          <Route path="/dashboard" exact element={<UserDashBoard />} />
+        
           <Route path="/wishlist" exact element={<Wishlist />} />
         </Route>
       </Routes>
