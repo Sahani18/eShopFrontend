@@ -30,6 +30,23 @@ export const getToken = (userId, token) => {
     .catch((err) => console.log(err));
 };
 
+/* export const getIntend = async({amount}) => {
+
+  console.log("AMT",amount);
+  return await fetch(`${API}/payment/secret`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    body: JSON.stringify(amount),
+  })
+    .then((response) => {
+      console.log("API CALL RESP",response.json());
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+}; */
+
 export const processPayment = (userId, token, paymentInfo) => {
   return fetch(`${API}/payment/braintree/${userId}`, {
     method: "GET",

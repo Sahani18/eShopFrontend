@@ -2,10 +2,11 @@ import { Trash, Check } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Navbar from "../core/Navbar";
 import Base from "../core/Base";
-import { loadCart, removeCartItem } from "../core/helper/cartHelper";
+import { loadCart, removeCartItem, cartEmpty } from "../core/helper/cartHelper";
 import { ToastContainer, toast } from "react-toastify";
 import { isAuthenticated } from "../auth/helper";
 import StripeCheckout from "react-stripe-checkout";
+import { createOrder } from "../core/helper/orderHelper";
 import { NavLink } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 import { getToken } from "../core/helper/paypalHelper";
@@ -49,7 +50,7 @@ const Cart = () => {
 
   useEffect(() => {
     setProducts(loadCart());
-    getmeToken(userID, token);
+    /*  getmeToken(userID, token); */
   }, []);
 
   const payPal = () => {
@@ -61,9 +62,7 @@ const Cart = () => {
               options={{ authorization: info.clientToken }}
               onInstance={(instance) => (info.instance = instance)}
             />
-            <button className="btn btn-block btn-success" onClick={onPurchase}>
-              Buy
-            </button>
+            <button className="btn btn-block btn-success">Buy</button>
           </div>
         ) : (
           <h3>Please login or add something to cart</h3>
@@ -97,42 +96,52 @@ const Cart = () => {
 
   const stripeAmount = () => {
     let amount = getCartAmount() - discountPrice;
-    // setTotal(getCartAmount() * Currencyconversion - discountPrice * Currencyconversion);
+
     return amount;
   };
-  const onPurchase = () => {
+  /*  const onPurchase = () => {
     setInfo({ loading: true });
     let nonce;
-    let getNonce = info.instance.requestPaymentMethod().then(data => {
+    let getNonce = info.instance.requestPaymentMethod().then((data) => {
       nonce = data.nonce;
       const paymentData = {
         paymentMethodNonce: nonce,
-        amount: getAmount()
+        amount: getAmount(),
       };
-      processPayment(userId, token, paymentData)
-        .then(response => {
+      processPayment(userID, token, paymentData)
+        .then((response) => {
           setInfo({ ...info, success: response.success, loading: false });
           console.log("PAYMENT SUCCESS");
           const orderData = {
             products: products,
             transaction_id: response.transaction.id,
-            amount: response.transaction.amount
+            amount: response.transaction.amount,
           };
-          createOrder(userId, token, orderData);
+          createOrder(userID, token, orderData).then((data) =>
+            console.log(data)
+          );
           cartEmpty(() => {
             console.log("Did we got a crash?");
           });
-
-          setReload(!reload);
         })
-        .catch(error => {
+        .catch((error) => {
           setInfo({ loading: false, success: false });
           console.log("PAYMENT FAILED");
         });
     });
+  }; */
+  const onStripeClick = async (amount) => {
+    await fetch(`${API}/payment/secret`, {
+      method: "POST",
+      body: JSON.stringify(amount),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => console.log(err));
   };
 
-  const makePayment = (token) => {
+  const makePayment = async (token) => {
     const body = {
       token: token,
       amount: stripeAmount() * Currencyconversion,
@@ -145,7 +154,25 @@ const Cart = () => {
       headers,
       body: JSON.stringify(body),
     })
-      .then((response) => console.log(response))
+      .then((response) => {
+        // console.log("Line 150",response.json());
+        /*      const {client_secret}=await response.json();
+        console.log("Secret",client_secret); */
+        const orderData = {
+          products: products,
+          transaction_id: response.transaction.id,
+          amount: response.transaction.amount,
+        };
+        createOrder(userID, token, orderData).then((data) => {
+          console.log(data);
+          toast("Order Placed");
+
+          cartEmpty(() => {
+            console.log("Did we got a crash?");
+          });
+          return;
+        });
+      })
       .catch((err) => console.log(err));
   };
 
@@ -153,7 +180,7 @@ const Cart = () => {
     return isAuthenticated() ? (
       <>
         <StripeCheckout
-          stripeKey="pk_test_51NCgUpSA4QKHgmwbz1AKTyPuTcmASpXLDMfxrpeDODjVQBWxMZ41t3cnkPM7nOzqDQlwxp6x4ST2NhvKAq08ZD3u003Lrb0i9Q"
+          stripeKey={process.env.REACT_APP_STRIPE_PUBLISH_KEY}
           token={makePayment}
           amount={stripeAmount() * Currencyconversion}
           key={token}
@@ -170,7 +197,13 @@ const Cart = () => {
           </button>{" "}
         </StripeCheckout>
         <br />
-        <button onClick={payPal} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+        <button
+          onClick={() => {
+            let amount = stripeAmount() * Currencyconversion;
+            onStripeClick(amount);
+          }}
+          className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+        >
           Pay with Paypal
         </button>
       </>
